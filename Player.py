@@ -10,18 +10,25 @@ class Player(object):
 #(Also things like character names etc, which are only useful in expansion)
 #
 
+
+   
+
     def __init__(self, PlayerName, Colour):
         self.PlayerName = PlayerName
         self.Colour = Colour
         self.Location = "white"
         self.Deck = "top"
-
-    def getPlayerName(self):
-        return self.PlayerName
-
-    def getColour(self):
-        return self.Colour
-
+        self.Turn = dict()    
+        for x in range(0,13):
+            self.Turn[str(x+1)] = 'blank'
+        
+        
+    def errhandler(self):
+        print("Your input has not been recognised")    
+        
+        
+    #Move Rules
+    #---------------------------------------------------------------
     def moveblue(self):
         NewLocation = {
             "blue": "blue",
@@ -43,10 +50,7 @@ class Player(object):
         NewDeck = {'top': 'bottom', 'bottom': 'top'}
         self.Deck = str(NewDeck.get(self.Deck))
 
-
-    def errhandler(self):
-        print("Your input has not been recognised")
-
+            
     def move(self, direction):
         
         #set up dictionary of moves
@@ -56,5 +60,12 @@ class Player(object):
             "lift": self.takelift}
     
         takeaction.get(direction,self.errhandler)()
-
+   
+#-------------------------------------------------------------
+   
+    #def addturn(self,turnnumber,action):
+    #    Turn.append(turnnumber, action)
     
+    
+    #def delay(self,turnnumber):
+        #move all planned actions up by one 
