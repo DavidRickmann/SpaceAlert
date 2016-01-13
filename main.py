@@ -12,7 +12,7 @@ print " "
 
 #How many players:
 NumPlayers = int(input("How Many Players? "))
-
+NumTurns = 2
 
 #Define Players
 PlayerList = []
@@ -24,20 +24,27 @@ for x in range(0, NumPlayers):
 
     print(PlayerList[x].Colour + " Player is called " + PlayerList[x].PlayerName)
 
-  
-    
-for x in range(0,13):
+#populate action list    
+for x in range(0,NumTurns): 
     Action = raw_input('Choose action for turn ' + str(x) + ': ')
     PlayerList[0].Turn[str(x)] = Action
     print PlayerList[0].Turn[str(x)]
 
-print PlayerList[0].Turn
-    
+
 #Some test stuff
-for x in range(0,13):
+for x in range(0,NumTurns):
     print("Turn " + str(x+1))
     print("The " + PlayerList[0].Colour + " player is on the " + PlayerList[0].Location + " " + PlayerList[0].Deck + " deck")
-
-    print("The " + PlayerList[0].Colour + "chooses action " +  PlayerList[0].Turn[str(x)])
+    print("The " + PlayerList[0].Colour + " player chooses action " +  PlayerList[0].Turn[str(x)])
     
+    if PlayerList[0].Turn[str(x)] == 'red':
+        print("action was red")
+        PlayerList[0].movered
+    if PlayerList[0].Turn[str(x)] == "blue":
+        print("action was blue")
+        PlayerList[0].moveblue
+
+
+
+print("done")
     

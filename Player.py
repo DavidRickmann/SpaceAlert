@@ -34,7 +34,8 @@ class Player(object):
             "blue": "blue",
             "white": "blue",
             "red": "white"}
-    
+
+        print("moving blue")
         self.Location = str(NewLocation.get(self.Location))
 
     def movered(self):
@@ -43,6 +44,7 @@ class Player(object):
             "white": "red",
             "red": "red"}
     
+        print("moving red")
         self.Location = str(NewLocation.get(self.Location))
 
     def takelift(self):
@@ -51,18 +53,11 @@ class Player(object):
         self.Deck = str(NewDeck.get(self.Deck))
 
             
-    def move(self, direction):
-        
-        #set up dictionary of moves
-        takeaction = {
-            "blue": self.moveblue,
-            "red": self.movered,
-            "lift": self.takelift}
     
-        takeaction.get(direction,self.errhandler)()
-   
 #-------------------------------------------------------------
-   
+
+
+
     #def addturn(self,turnnumber,action):
     #    Turn.append(turnnumber, action)
     
