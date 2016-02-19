@@ -202,15 +202,10 @@ class scrSimulator(tk.Frame):
         w.create_oval(self.BridgeCentre + self.CabinWidth - GLO_x, TDR_2y + GLO_y, self.BridgeCentre + self.CabinWidth + GLO_x, TDR_2y - GLO_y , fill="yellow", width = 3) # gravlift
 
 
-    def place_player(self,w,Cabin,Position,Colour):
+    def place_player(self,w,Cabin,Position):
         
         #setup currently to just place red, more later
-        #Need to take in variables Cabin, Position, PLayer
-        
-        #Hardcode Variables for testing
-        #Cabin = "TW" 
-        #Position = 2
-        
+               
         
         #define positions
         player_radius = 20 
@@ -220,16 +215,16 @@ class scrSimulator(tk.Frame):
         if Cabin == "TW":
            CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2)]
         elif Cabin == "TR":
-           CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2)]
+           CabCentre = [self.BridgeCentre - self.CabinWidth, (self.BridgeFront + self.CabinHeight / 2) + self.DeckOffset]
         elif Cabin == "TB":
-           CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2)]
+           CabCentre = [self.BridgeCentre + self.CabinWidth, (self.BridgeFront + self.CabinHeight / 2) + self.DeckOffset]
            
         elif Cabin == "BW":
-           CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2)]
+           CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2) + self.CabinHeight]
         elif Cabin == "BR":
-           CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2)]   
+           CabCentre = [self.BridgeCentre - self.CabinWidth, (self.BridgeFront + self.CabinHeight / 2)  + self.DeckOffset + self.CabinHeight]   
         elif Cabin == "BB":
-           CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2)]   
+           CabCentre = [self.BridgeCentre + self.CabinWidth, (self.BridgeFront + self.CabinHeight / 2)  + self.DeckOffset + self.CabinHeight]   
 
              
         #position offsets
@@ -244,10 +239,12 @@ class scrSimulator(tk.Frame):
         elif Position == 5:      
             PosOffset = [-self.CabinWidth * 0.15, self.CabinHeight * 0.25]
                 
-        
         pos1 = [CabCentre[0] + PosOffset[0],CabCentre[1] + PosOffset[1]] #Cabin + offset
         Pos = [(pos1[0] - player_radius),(pos1[1] - player_radius),(pos1[0] + player_radius),(pos1[1] + player_radius)] #cabin + offset + player radius
-        w.create_oval(Pos[0],Pos[1],Pos[2],Pos[3], fill=Colour, width=2)    
+        return Pos
+        
+    def Player_Move(Self, w):
+        w.move('Player1', -70, 70)
         
         
         
@@ -281,16 +278,30 @@ class scrSimulator(tk.Frame):
         btnReturn = tk.Button(self, text="Done", command=lambda: controller.show_frame(scrMenu))
         btnReturn.grid(column = c-1, row=r-1, sticky = "nsew")
         
+        #Test Move Button
+        btnMove = tk.Button(self, text="TestMove", command= self.Player_Move(w) )
+        btnMove.grid(column = 10, row=r-1, sticky = "nsew")       
         
        
         
         #draw ship
         self.background(w)
-        self.place_player(w,"TW",1,"red")
-        self.place_player(w,"TW",2,"blue")
-        self.place_player(w,"TW",3,"green")
-        self.place_player(w,"TW",4,"yellow")
-        self.place_player(w,"TW",5,"purple")
+        
+        Pos = self.place_player(w,"TW",1)
+        Player1 = w.create_oval(Pos[0],Pos[1],Pos[2],Pos[3], fill="red", width=2)
+        
+        Pos = self.place_player(w,"BW",1)
+        Player2 = w.create_oval(Pos[0],Pos[1],Pos[2],Pos[3], fill="blue", width=2)
+        
+        Pos = self.place_player(w,"TR",1)
+        Player3 = w.create_oval(Pos[0],Pos[1],Pos[2],Pos[3], fill="green", width=2)
+        
+        Pos = self.place_player(w,"TB",1)
+        Player4 = w.create_oval(Pos[0],Pos[1],Pos[2],Pos[3], fill="yellow", width=2)
+        
+        Pos = self.place_player(w,"BB",1)
+        Player5 = w.create_oval(Pos[0],Pos[1],Pos[2],Pos[3], fill="purple", width=2)
+        
     
     
      
