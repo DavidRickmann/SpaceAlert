@@ -138,6 +138,119 @@ class scrBarracks(tk.Frame):
         
 class scrSimulator(tk.Frame):
 
+    #Setup Dimensions
+        
+    #Ship Position
+    BridgeCentre = 450
+    BridgeFront = 50
+        
+    #Cabin Size
+    CabinHeight = 200
+    CabinWidth = 200
+        
+    #Layout
+    DeckOffset = 20
+ 
+    #GravLifts
+    GravLiftWidth = 40
+    GravliftHeight = 20
+
+
+
+    def background(self, w):
+                      
+
+        #White Deck
+        TDW_1x = self.BridgeCentre - (self.CabinWidth / 2)
+        TDW_1y = self.BridgeFront
+        TDW_2x = self.BridgeCentre + (self.CabinWidth / 2)
+        TDW_2y = self.BridgeFront + self.CabinHeight
+        
+        GLO_y = self.GravliftHeight/2
+        GLO_x = self.GravLiftWidth / 2
+              
+        w.create_rectangle(TDW_1x, TDW_1y, TDW_2x , TDW_2y , fill="white") # Bridge
+        w.create_rectangle(TDW_1x, TDW_1y + self.CabinHeight, TDW_2x , TDW_2y + self.CabinHeight , fill="white") # Engineering
+        w.create_oval(self.BridgeCentre - GLO_x, TDW_2y + GLO_y, self.BridgeCentre + GLO_x, TDW_2y - GLO_y,fill="yellow", width = 3) # gravlift
+        
+        #RedDeck
+        
+        TDR_1x = TDW_1x - self.CabinWidth
+        TDR_1y = TDW_1y + self.DeckOffset
+        TDR_2x = TDW_2x - self.CabinWidth
+        TDR_2y = TDW_2y + self.DeckOffset
+        
+        w.create_rectangle(TDR_1x, TDR_1y, TDR_2x , TDR_2y , fill="red") # Bridge
+        w.create_rectangle(TDR_1x, TDR_1y + self.CabinHeight, TDR_2x , TDR_2y + self.CabinHeight , fill="red") # Engineering
+        
+        w.create_oval(
+            self.BridgeCentre - self.CabinWidth - GLO_x, 
+            TDR_2y + GLO_y, 
+            self.BridgeCentre - self.CabinWidth + GLO_x, 
+            TDR_2y - GLO_y, 
+            fill="yellow", width = 3) # gravlift
+        
+        #BlueDeck
+        
+        TDB_1x = TDW_1x + self.CabinWidth
+        TDB_1y = TDW_1y + self.DeckOffset
+        TDB_2x = TDW_2x + self.CabinWidth
+        TDB_2y = TDW_2y + self.DeckOffset
+        
+        w.create_rectangle(TDB_1x, TDB_1y, TDB_2x , TDB_2y , fill="blue") # Bridge
+        w.create_rectangle(TDB_1x, TDB_1y + self.CabinHeight, TDB_2x , TDB_2y + self.CabinHeight , fill="blue") # Engineering
+        w.create_oval(self.BridgeCentre + self.CabinWidth - GLO_x, TDR_2y + GLO_y, self.BridgeCentre + self.CabinWidth + GLO_x, TDR_2y - GLO_y , fill="yellow", width = 3) # gravlift
+
+
+    def place_player(self,w,Cabin,Position,Colour):
+        
+        #setup currently to just place red, more later
+        #Need to take in variables Cabin, Position, PLayer
+        
+        #Hardcode Variables for testing
+        #Cabin = "TW" 
+        #Position = 2
+        
+        
+        #define positions
+        player_radius = 20 
+        
+        #top white
+        #Cabin Centres
+        if Cabin == "TW":
+           CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2)]
+        elif Cabin == "TR":
+           CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2)]
+        elif Cabin == "TB":
+           CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2)]
+           
+        elif Cabin == "BW":
+           CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2)]
+        elif Cabin == "BR":
+           CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2)]   
+        elif Cabin == "BB":
+           CabCentre = [self.BridgeCentre, (self.BridgeFront + self.CabinHeight / 2)]   
+
+             
+        #position offsets
+        if Position == 1:      
+            PosOffset = [0, -self.CabinHeight * 0.20]
+        elif Position == 2:      
+            PosOffset = [self.CabinWidth * 0.25, 0]
+        elif Position == 3:      
+            PosOffset = [-self.CabinWidth * 0.25, 0]
+        elif Position == 4:      
+            PosOffset = [self.CabinWidth * 0.15, self.CabinHeight * 0.25]
+        elif Position == 5:      
+            PosOffset = [-self.CabinWidth * 0.15, self.CabinHeight * 0.25]
+                
+        
+        pos1 = [CabCentre[0] + PosOffset[0],CabCentre[1] + PosOffset[1]] #Cabin + offset
+        Pos = [(pos1[0] - player_radius),(pos1[1] - player_radius),(pos1[0] + player_radius),(pos1[1] + player_radius)] #cabin + offset + player radius
+        w.create_oval(Pos[0],Pos[1],Pos[2],Pos[3], fill=Colour, width=2)    
+        
+        
+        
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         
@@ -156,79 +269,32 @@ class scrSimulator(tk.Frame):
         
         Title = tk.Label(self, text="Simulator", bg="black", fg="green",bd=2, font="courier", relief="groove")
         Title.grid(column = 1 , row = 1,columnspan =(c-1), sticky = 'nsew')
-               
-        #close button
-        btnReturn = tk.Button(self, text="Done", command=lambda: controller.show_frame(scrMenu))
-        btnReturn.grid(column = c-1, row=r-1, sticky = "nsew")
-
+          
         #canvas element        
         w = tk.Canvas(self, width=900, height=500,
            borderwidth=0,
            highlightthickness=0,
            background='black')
-        w.grid(column = 2, row = 1, columnspan=c-1, rowspan = r-1) 
-
+        w.grid(column = 2, row = 1, columnspan=c-1, rowspan = r-1)   
+         
+        #close button
+        btnReturn = tk.Button(self, text="Done", command=lambda: controller.show_frame(scrMenu))
+        btnReturn.grid(column = c-1, row=r-1, sticky = "nsew")
         
-        #Ship Location
-        BridgeCentre = 450
-        BridgeFront = 50
         
-        #Cabin Size
-        CabinHeight = 200
-        CabinWidth = 200
+       
         
-        #Layout
-        DeckOffset = 20
-
-        #GravLifts
-        GravLiftWidth = 40
-        GravliftHeight = 20
-              
-
-        #White Deck
-        TDW_1x = BridgeCentre - (CabinWidth / 2)
-        TDW_1y = BridgeFront
-        TDW_2x = BridgeCentre + (CabinWidth / 2)
-        TDW_2y = BridgeFront + CabinHeight
-        
-        GLO_y = GravliftHeight/2
-        GLO_x = GravLiftWidth / 2
-              
-        w.create_rectangle(TDW_1x, TDW_1y, TDW_2x , TDW_2y , fill="white") # Bridge
-        w.create_rectangle(TDW_1x, TDW_1y + CabinHeight, TDW_2x , TDW_2y + CabinHeight , fill="white") # Engineering
-        w.create_oval(BridgeCentre - GLO_x, TDW_2y + GLO_y, BridgeCentre + GLO_x, TDW_2y - GLO_y,fill="yellow", width = 3) # gravlift
-        
-        #BlueDeck
-        
-        TDB_1x = TDW_1x - CabinWidth
-        TDB_1y = TDW_1y + DeckOffset
-        TDB_2x = TDW_2x - CabinWidth
-        TDB_2y = TDW_2y + DeckOffset
-        
-        w.create_rectangle(TDB_1x, TDB_1y, TDB_2x , TDB_2y , fill="blue") # Bridge
-        w.create_rectangle(TDB_1x, TDB_1y + CabinHeight, TDB_2x , TDB_2y + CabinHeight , fill="blue") # Engineering
-        
-        w.create_oval(
-            BridgeCentre - CabinWidth - GLO_x, 
-            TDB_2y + GLO_y, 
-            BridgeCentre - CabinWidth + GLO_x, 
-            TDB_2y - GLO_y, 
-            fill="yellow", width = 3) # gravlift
-        
-        #RedDeck
-        
-        TDR_1x = TDW_1x + CabinWidth
-        TDR_1y = TDW_1y + DeckOffset
-        TDR_2x = TDW_2x + CabinWidth
-        TDR_2y = TDW_2y + DeckOffset
-        
-        w.create_rectangle(TDR_1x, TDR_1y, TDR_2x , TDR_2y , fill="red") # Bridge
-        w.create_rectangle(TDR_1x, TDR_1y + CabinHeight, TDR_2x , TDR_2y + CabinHeight , fill="red") # Engineering
-        w.create_oval(BridgeCentre + CabinWidth - GLO_x, TDB_2y + GLO_y, BridgeCentre + CabinWidth + GLO_x, TDB_2y - GLO_y , fill="yellow", width = 3) # gravlift
-        
-
-        
-        w.create_oval(440,90,460,110, fill="red", width=2)
+        #draw ship
+        self.background(w)
+        self.place_player(w,"TW",1,"red")
+        self.place_player(w,"TW",2,"blue")
+        self.place_player(w,"TW",3,"green")
+        self.place_player(w,"TW",4,"yellow")
+        self.place_player(w,"TW",5,"purple")
+    
+    
+     
+   
         
         
         
