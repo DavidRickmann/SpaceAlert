@@ -202,13 +202,12 @@ class scrSimulator(tk.Frame):
         w.create_oval(self.BridgeCentre + self.CabinWidth - GLO_x, TDR_2y + GLO_y, self.BridgeCentre + self.CabinWidth + GLO_x, TDR_2y - GLO_y , fill="yellow", width = 3) # gravlift
 
 
-    def place_player(self,w,Cabin,Position):
+    def get_loc_coords(self,w,Cabin,Position):
         
         #setup currently to just place red, more later
-               
-        
+             
         #define positions
-        player_radius = 20 
+        player_radius = 10 
         
         #top white
         #Cabin Centres
@@ -243,8 +242,51 @@ class scrSimulator(tk.Frame):
         Pos = [(pos1[0] - player_radius),(pos1[1] - player_radius),(pos1[0] + player_radius),(pos1[1] + player_radius)] #cabin + offset + player radius
         return Pos
         
-    def Player_Move(Self, w):
-        w.move('Player1', -70, 70)
+    def Player_Move(self, w, PlayerTag,Cab,Spot):
+        
+        #inputs
+            #required location
+            target = self.get_loc_coords(w,Cab,Spot)
+            current = w.coords(PlayerTag)
+            
+            currentx = current[0]
+            currenty = current[1]
+            
+            targetx = target[0]            
+            targety = target[1]
+            
+            print("X",currentx,targetx)
+            print("Y",currenty,targety)
+           
+            #Determine move direction (if x < then +1 if x > then -1) same with y
+            if (currentx > targetx):
+                movex = -1
+            elif (targetx > currentx):
+                movex = 1
+            elif (targetx == currentx):
+                movex = 0
+             
+            #Determine move direction (if x < then +1 if x > then -1) same with y
+            if (currenty > targety):
+                movey = -1
+            elif (targety > currenty):
+                movey = 1
+            elif (targety == currenty):
+                movey = 0
+                
+            #move towards required coordinates 
+            w.move(PlayerTag, movex, movey)
+            
+            #Check if coords = required location
+            if not(movex == 0 and movey == 0):
+                self.after(50, self.Player_Move(w,PlayerTag,Cab,Spot ))
+            else:
+                print("done")
+        
+            
+
+        
+        
         
         
         
@@ -278,31 +320,32 @@ class scrSimulator(tk.Frame):
         btnReturn = tk.Button(self, text="Done", command=lambda: controller.show_frame(scrMenu))
         btnReturn.grid(column = c-1, row=r-1, sticky = "nsew")
         
-        #Test Move Button
-        btnMove = tk.Button(self, text="TestMove", command= self.Player_Move(w) )
-        btnMove.grid(column = 10, row=r-1, sticky = "nsew")       
-        
-       
-        
+                
         #draw ship
         self.background(w)
         
-        Pos = self.place_player(w,"TW",1)
+        #drop in players
+        Pos = self.get_loc_coords(w,"TW",1)
         Player1 = w.create_oval(Pos[0],Pos[1],Pos[2],Pos[3], fill="red", width=2)
         
-        Pos = self.place_player(w,"BW",1)
+        Pos = self.get_loc_coords(w,"BW",1)
         Player2 = w.create_oval(Pos[0],Pos[1],Pos[2],Pos[3], fill="blue", width=2)
         
-        Pos = self.place_player(w,"TR",1)
+        Pos = self.get_loc_coords(w,"TR",1)
         Player3 = w.create_oval(Pos[0],Pos[1],Pos[2],Pos[3], fill="green", width=2)
         
-        Pos = self.place_player(w,"TB",1)
+        Pos = self.get_loc_coords(w,"TB",1)
         Player4 = w.create_oval(Pos[0],Pos[1],Pos[2],Pos[3], fill="yellow", width=2)
         
-        Pos = self.place_player(w,"BB",1)
+        Pos = self.get_loc_coords(w,"BB",1)
         Player5 = w.create_oval(Pos[0],Pos[1],Pos[2],Pos[3], fill="purple", width=2)
         
-    
+        
+        #Test Move Button
+        btnMove = tk.Button(self, text="TestMove", command= lambda: self.Player_Move(w,w.find_withtag(Player5),"TW",2 ))
+        btnMove.grid(column = 10, row=r-1, sticky = "nsew")     
+
+       
     
      
    

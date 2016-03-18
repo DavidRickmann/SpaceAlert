@@ -1,0 +1,25 @@
+Main Menu
+
+
+Barracks
+    Manage Crew
+    Put together pre prepared crew rosters
+
+Training Room
+     Basic Training
+     Simulator
+
+Library 
+    (description of threats)
+    Archives of previous missions
+    Save games
+     
+Administration
+    Settings
+    
+Launch Bay
+    Briefing Room (set up mission or chain of missions)
+    Docking Terminal (Go)
+    
+    
+
