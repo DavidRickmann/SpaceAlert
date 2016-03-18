@@ -1,0 +1,12 @@
+volMusic = 100;
+volBit = 100;
+this.createEmptyMovieClip("bit",this.getNextHighestDepth());
+this.createEmptyMovieClip("bit2",this.getNextHighestDepth());
+this.createEmptyMovieClip("bitLoop",this.getNextHighestDepth());
+this.createEmptyMovieClip("bitLoop2",this.getNextHighestDepth());
+this.createEmptyMovieClip("music",this.getNextHighestDepth());
+soundMusic = new Sound(this.music);
+soundBit = new Sound(this.bit);
+soundBit2 = new Sound(this.bit2);
+soundBitLoop = new Sound(this.bitLoop);
+soundBitLoop2 = new Sound(this.bitLoop2);

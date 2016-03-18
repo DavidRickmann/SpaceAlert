@@ -1,0 +1,7 @@
+This is not a complete game. This program was designed to support the board game SPACE ALERT. I did not 
+--- RECORDSEPARATOR ---
+make SPACE ALERT. It is a cooperative board game by Vlaada Chvatil. Czech Games Edition. 
+--- RECORDSEPARATOR ---
+www.czechgames.com. It's very fun. Go buy it now.  
+--- RECORDSEPARATOR ---
+The unofficial TURN PROCESSOR is by homedrone@gmail.com.

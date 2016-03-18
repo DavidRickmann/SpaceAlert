@@ -1,0 +1,2 @@
+damage = "on";
+stop();

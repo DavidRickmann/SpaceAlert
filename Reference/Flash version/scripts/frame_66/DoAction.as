@@ -1,0 +1,2 @@
+gotoAndStop("selectActions");
+play();

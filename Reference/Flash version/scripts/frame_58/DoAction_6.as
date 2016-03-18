@@ -1,0 +1,15 @@
+this.createEmptyMovieClip("main",this.getNextHighestDepth());
+trace("this.main._x " + this.main._x);
+this.main.attachMovie("BG","BG",this.main.getNextHighestDepth());
+this.main.BG._x = -100;
+this.main.BG._y = -51;
+this.main.attachMovie("shade","shade",this.main.getNextHighestDepth());
+this.main.shade._x = -152;
+this.main.shade._y = -115;
+this.main.attachMovie("menu-main","menu-main",this.main.getNextHighestDepth());
+this.attachMovie("border","border",this.getNextHighestDepth());
+this.border._x = -684;
+this.border._y = -720;
+this.attachMovie("sound-buttons","sound-buttons",this.getNextHighestDepth());
+this["sound-buttons"]._x = 7;
+this["sound-buttons"]._y = 734;
